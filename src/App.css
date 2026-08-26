@@ -1,0 +1,50 @@
+.chips {
+  display:flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 48px;
+  gap:8px;
+}
+
+.chip {
+  padding: 8px 16px;
+  background-color: #f3f4f6;
+  color:#111;
+  border-radius: 100px;
+  border:1px solid black;
+  transition: background-color 150ms ease-in, color 150ms ease-in;
+}
+
+.chip:hover {
+  background-color: #e5e7eb;
+}
+
+.chip:focus {
+  outline: 2px solid #9cc7ff;
+  outline-offset: 1px;
+}
+
+.chip:active {
+  background-color: #d1d5db;
+}
+
+.chip:disabled {
+  background-color: #929292;
+}
+
+.selected {
+  background-color: #0f766e;
+  color:white;
+}
+
+.selected:hover {
+  background-color: #0d9488;
+}
+
+.selected:active {
+  background-color: #115e59;
+}
+
+
+
+
