@@ -2,17 +2,18 @@
   display:flex;
   justify-content: center;
   align-items: stretch;
-  height: 48px;
+  height: 32px;
   gap:8px;
 }
 
 .chip {
-  padding: 8px 16px;
+  padding: 0px 16px;
   background-color: #f3f4f6;
   color:#111;
+  font-weight: 400;
   border-radius: 100px;
-  border:1px solid black;
-  transition: background-color 150ms ease-in, color 150ms ease-in;
+  border:1px solid rgba(202, 202, 202,20%);
+  transition: background-color 80ms ease-in, color 80ms ease-in;
 }
 
 .chip:hover {
@@ -20,8 +21,8 @@
 }
 
 .chip:focus {
-  outline: 2px solid #9cc7ff;
-  outline-offset: 1px;
+  outline: 2px solid #bbe0dd;
+  outline-offset: 0.5px;
 }
 
 .chip:active {
@@ -29,7 +30,8 @@
 }
 
 .chip:disabled {
-  background-color: #929292;
+  background-color: #d9d9d9;
+  color:#b8b8b8;
 }
 
 .selected {
