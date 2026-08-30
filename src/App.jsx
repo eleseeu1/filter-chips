@@ -1,6 +1,6 @@
 import './App.css'
 import Chip from "./Chip.jsx"
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 export default function App() {
   const [selectedChips, setSelectedChips] = useState([])
@@ -8,7 +8,8 @@ export default function App() {
   const chips = [
     {id: "design", name: "Design", disabled: false},
     {id: "product", name: "Product"},
-    {id: "develop", name: "Develop"}
+    {id: "develop", name: "Develop"},
+    {id: "research", name: "Research"}
   ]
 
   const cards = [
@@ -54,6 +55,8 @@ export default function App() {
     }
   ]
 
+  
+
   const renderedCards = cards.filter((card)=> {
     if(selectedChips.length === 0) {
       return true
@@ -84,6 +87,19 @@ export default function App() {
     setSelectedChips([])
   }
 
+  function handleEscape(e){
+    if(e.key === "Escape") {
+      clearAll()
+    }
+  }
+
+  useEffect(()=>{
+    document.addEventListener("keydown", handleEscape)
+    return () => {
+      document.removeEventListener("keydown", handleEscape)
+    }
+  },[])
+
   return (
     <>
       <div className="chips">
@@ -94,7 +110,9 @@ export default function App() {
         })}
         <button disabled = {selectedChips.length === 0 ? true : false} onClick = {clearAll}>Clear All</button>
       </div>
-      <div className='cards'>
+      {selectedChips.length === 0 ? "": <p>{renderedCards.length + " items"}</p>}
+      {renderedCards.length !== 0 ? (
+        <div className='cards'>
         {
           renderedCards.map((card)=>{
             return (
@@ -107,7 +125,7 @@ export default function App() {
             )
           })
         }
-      </div>
+      </div>) : "No Matches"}
     </>
   )
 }

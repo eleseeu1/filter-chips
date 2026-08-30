@@ -51,6 +51,17 @@ body {
   background-color: #115e59;
 }
 
+.cards {
+  display:flex;
+  flex-direction: column;
+  gap:8px;
+}
+
+.cards div {
+  border:1px solid gray;
+  background-color: #e5e7eb;
+}
+
 
 
 
