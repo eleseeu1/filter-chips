@@ -1,9 +1,15 @@
 import './App.css'
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import Chip from "./Chip"
 
 export default function App() {
   const [chipSelected, setChipSelected] = useState([])
+
+  useEffect(()=>{
+    document.addEventListener("keydown", handleEscape)
+    return () => {document.removeEventListener("keydown", handleEscape)}
+  },[])
+
   const chips = [
     {
       id: "design",
@@ -16,8 +22,87 @@ export default function App() {
     {
       id: "develop",
       name: "Develop"
+    },
+    {
+      id: "marketing",
+      name: "marketing"
     }
   ]
+
+  const cards = [
+    {
+      id: "card-1",
+      title: "Onboarding checklist",
+      tags: ["product", "design"]
+    },
+    {
+      id: "card-2",
+      title: "Component library",
+      tags: ["design", "develop"]
+    },
+    {
+      id: "card-3",
+      title: "Pricing page",
+      tags: ["product"]
+    },
+    {
+      id: "card-4",
+      title: "API error states",
+      tags: ["develop"]
+    },
+    {
+      id: "card-5",
+      title: "Keyboard shortcuts",
+      tags: ["design", "product"]
+    },
+    {
+      id: "card-6",
+      title: "Empty search",
+      tags: ["design"]
+    },
+    {
+      id: "card-7",
+      title: "Billing settings",
+      tags: ["product", "develop"]
+    },
+    {
+      id: "card-8",
+      title: "Focus ring spec",
+      tags: ["design", "develop"]
+    },
+    {
+      id: "card-9",
+      title: "Checkout errors",
+      tags: ["product"]
+    },
+    {
+      id: "card-10",
+      title: "Auth token refresh",
+      tags: ["develop"]
+    },
+    {
+      id: "card-11",
+      title: "Settings nav",
+      tags: ["design", "product"]
+    },
+    {
+      id: "card-12",
+      title: "Log table empty",
+      tags: ["design", "develop"]
+    }
+  ]
+
+  const selectedCards = cards.filter(card=>{
+    if(chipSelected.length === 0) {
+      return true
+    }
+    for(let i = 0; i < card.tags.length; i++) {
+      if(chipSelected.includes(card.tags[i])){
+        return true
+      }
+    } 
+    return false
+  })
 
   function handleClick(id) {
     if(chipSelected.includes(id)) {
@@ -31,18 +116,37 @@ export default function App() {
     }
   }
 
+  function handleEscape(e) {
+    if(e.key === "Escape") {
+      clearAll()
+    }
+  }
+
   function clearAll() {
     setChipSelected([])
   }
 
   return (
-    <div class="chips">
-      {
-        chips.map((chip)=> {
-          return <Chip key={chip.id} onClick={()=>handleClick(chip.id)} selected={chipSelected.includes(chip.id)}>{chip.name}</Chip>
-        })
-      }
-      <button onClick = {clearAll} disabled = {chipSelected.length === 0 ? true : false}>Clear All</button>
-    </div>
+    <>
+      <div className="chips">
+        {
+          chips.map((chip)=> {
+            return <Chip key={chip.id} onClick={()=>handleClick(chip.id)} selected={chipSelected.includes(chip.id)}>{chip.name}</Chip>
+          })
+        }
+        <button onClick = {clearAll} disabled = {chipSelected.length === 0 ? true : false}>Clear All</button>
+      </div>
+      {chipSelected.length === 0 ? "" : <p>{selectedCards.length + " items"}</p>}
+      {selectedCards.length === 0 ? <h3>No matches</h3> : <div className ="cards">
+        {
+          selectedCards.map(card=>{
+            return <div className="card" key = {card.id}>
+              <h3>{card.title}</h3>
+              {card.tags.map(tag=><p key = {tag} >{tag}</p>)}
+            </div>
+          })
+        }
+      </div>}
+    </>
   )
 }
