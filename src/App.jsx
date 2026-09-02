@@ -93,16 +93,20 @@ export default function App() {
     }
   ]
 
+  // Day 3: write selectedCards with .filter (from memory, not Week4).
+  // Nothing selected → keep every card.
+  // Else keep the card if any of its tags is in chipSelected.
   const selectedCards = cards.filter(card=>{
     if(chipSelected.length === 0) {
       return true
-    }
-    for(let i = 0; i < card.tags.length; i++) {
-      if(chipSelected.includes(card.tags[i])){
-        return true
+    } else {
+      for(let i = 0; i < card.tags.length; i++) {
+        if(chipSelected.includes(card.tags[i])) {
+          return true
+        } 
       }
-    } 
-    return false
+      return false
+    }
   })
 
   function handleClick(id) {
