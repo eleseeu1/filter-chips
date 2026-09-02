@@ -1,6 +1,7 @@
 import './App.css'
 import {useState, useEffect} from "react"
 import Chip from "./Chip"
+import CardItem from './CardItem'
 
 export default function App() {
   const [chipSelected, setChipSelected] = useState([])
@@ -140,10 +141,7 @@ export default function App() {
       {selectedCards.length === 0 ? <h3>No matches</h3> : <div className ="cards">
         {
           selectedCards.map(card=>{
-            return <div className="card" key = {card.id}>
-              <h3>{card.title}</h3>
-              {card.tags.map(tag=><p key = {tag} >{tag}</p>)}
-            </div>
+            return <CardItem key = {card.id} title={card.title} tags={card.tags}></CardItem>
           })
         }
       </div>}
