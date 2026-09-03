@@ -2,6 +2,8 @@ import './App.css'
 import {useState, useEffect} from "react"
 import Chip from "./Chip"
 import CardItem from './CardItem'
+import { AnimatePresence } from 'motion/react'
+import {motion} from 'motion/react'
 
 export default function App() {
   const [chipSelected, setChipSelected] = useState([])
@@ -141,14 +143,28 @@ export default function App() {
         }
         <button onClick = {clearAll} disabled = {chipSelected.length === 0 ? true : false}>Clear All</button>
       </div>
-      {chipSelected.length === 0 ? "" : <p>{selectedCards.length + " items"}</p>}
-      {selectedCards.length === 0 ? <h3>No matches</h3> : <div className ="cards">
-        {
-          selectedCards.map(card=>{
-            return <CardItem key = {card.id} title={card.title} tags={card.tags}></CardItem>
-          })
-        }
-      </div>}
+      {/* {chipSelected.length === 0 ? "" : <p>{selectedCards.length + " items"}</p>} */}
+      {
+      selectedCards.length === 0 ? <h3>No matches</h3> : <div className ="cards">
+          <AnimatePresence initial={false} mode='popLayout'>
+            {
+            selectedCards.map(card=>{
+              return <motion.div 
+                layout 
+                className="card"
+                initial={{ opacity: 0, y: 20}}
+                animate={{ opacity: 1, y:0}}
+                exit={{ opacity: 0,y:-5 }}
+                transition={{ duration: 0.2 }}
+                key = {card.id} 
+              >
+                  <CardItem title={card.title} tags={card.tags}></CardItem>
+                </motion.div>
+            })
+            } 
+          </AnimatePresence>
+      </div>
+      }
     </>
   )
 }
