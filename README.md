@@ -7,3 +7,6 @@ It's a filter chip with default, hover, pressed, selected and disabled state
 
 ## A screenshot
 ![Filter chips](docs/filter-chips.png)
+
+## A gif
+![Filter chips motion](docs/filter-motion.mov)
