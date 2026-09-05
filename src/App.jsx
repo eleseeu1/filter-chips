@@ -2,11 +2,10 @@ import './App.css'
 import {useState, useEffect} from "react"
 import Chip from "./Chip"
 import CardItem from './CardItem'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import {motion, AnimatePresence, useReducedMotion} from "motion/react"
 
 export default function App() {
   const [chipSelected, setChipSelected] = useState([])
-  const reduceMotion = useReducedMotion()
 
   useEffect(()=>{
     document.addEventListener("keydown", handleEscape)
@@ -95,9 +94,6 @@ export default function App() {
     }
   ]
 
-  // Day 3: write selectedCards with .filter (from memory, not Week4).
-  // Nothing selected → keep every card.
-  // Else keep the card if any of its tags is in chipSelected.
   const selectedCards = cards.filter(card=>{
     if(chipSelected.length === 0) {
       return true
@@ -144,25 +140,25 @@ export default function App() {
         <button onClick = {clearAll} disabled = {chipSelected.length === 0 ? true : false}>Clear All</button>
       </div>
       {chipSelected.length === 0 ? "" : <p>{selectedCards.length + " items"}</p>}
-      <div className ="cards">
-          <AnimatePresence initial={false} mode='popLayout'>
-            {
-              selectedCards.map(card=>{
-                  return <motion.div 
-                    layout = {reduceMotion ? false : true}
-                    className="card"
-                    initial={{ opacity: 0}}
-                    animate={{ opacity: 1}}
-                    exit={{ opacity: 0}}
-                    transition={{ duration: reduceMotion ? 0 : 0.2 }}
-                    key = {card.id} 
-                  >
-                      <CardItem title={card.title} tags={card.tags}></CardItem>
-                    </motion.div>
-              })
-            }
-          </AnimatePresence>
-          {selectedCards.length === 0 && <h3>No matches</h3>}
+      <div className="cards">
+        <AnimatePresence initial = {false} mode="popLayout">
+          {
+            selectedCards.map((card) => {
+              return <motion.div 
+                layout 
+                key = {card.id}
+                initial = {{opacity: 0}}
+                animate = {{opacity: 1, scale:1}}
+                exit = {{opacity:0, scale:0.95}}
+                transition = {{duration:0.15}}
+                className='card'
+              > 
+                <CardItem tags={card.tags} title={card.title}></CardItem>
+              </motion.div>
+            })
+          }
+        </AnimatePresence>
+        {selectedCards.length === 0 && <h3>No matches</h3>}
       </div>
     </>
   )
